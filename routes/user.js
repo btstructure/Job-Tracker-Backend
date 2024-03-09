@@ -5,11 +5,6 @@ const jwt = require("jsonwebtoken");
 const { default: mongoose } = require("mongoose");
 const authenticateToken = require("../middleware/authenticate");
 
-
-
-
-
-
 // User register
 
 router.post("/register", async (req, res) => {
@@ -47,14 +42,14 @@ router.post("/login", async (req, res) => {
 });
 
 //Getting job applications of selected user
-router.get('/job-applications', authenticateToken, async (req, res) => {
+router.get("/job-applications", authenticateToken, async (req, res) => {
   try {
     const userId = req.user.userId;
 
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     const jobApplications = user.jobApplications;
@@ -82,8 +77,8 @@ router.post("/job-applications", authenticateToken, async (req, res) => {
       companyName,
       jobTitle,
       jobLink,
-      status,
-      response,
+      status: status.toString(),
+      response: response.toString(),
       notes,
     });
     await user.save();
